@@ -1,0 +1,60 @@
+ /*question 1*/
+ SELECT * FROM Worker ORDER BY FIRST_NAME;
+ 
+ /*question 2*/
+SELECT * FROM Worker ORDER BY FIRST_NAME ASC, DEPARTMENT DESC;
+
+/*question 3*/
+SELECT * FROM Worker WHERE FIRST_NAME NOT IN ('Vipul', 'Satish');
+
+/*question 4*/
+SELECT * FROM Worker WHERE FIRST_NAME LIKE '_____h';
+
+/*question 5*/
+SELECT COUNT(*) AS Admin_Count FROM Worker WHERE DEPARTMENT = 'Admin';
+
+/*question 6*/
+SELECT FIRST_NAME, LAST_NAME, SALARY FROM Worker WHERE SALARY BETWEEN 50000 AND 100000;
+
+/*question 7*/
+SELECT DEPARTMENT, COUNT(*) AS Worker_Count 
+FROM Worker 
+GROUP BY DEPARTMENT 
+ORDER BY Worker_Count DESC;
+
+/*question 8*/
+SELECT MAX(salary) AS fifth_highest_salary 
+FROM worker 
+WHERE salary < ( 
+    SELECT MAX(salary) 
+    FROM worker 
+    WHERE salary < ( 
+        SELECT MAX(salary) 
+        FROM worker 
+        WHERE salary < ( 
+            SELECT MAX(salary) 
+            FROM worker 
+            WHERE salary < ( 
+                SELECT MAX(salary) 
+                FROM worker 
+            ) 
+        ) 
+    ) 
+); 
+
+/*question 9*/
+SELECT W1.*
+FROM Worker W1
+JOIN (
+    SELECT SALARY 
+    FROM Worker 
+    GROUP BY SALARY 
+    HAVING COUNT(*) > 1
+) W2 ON W1.SALARY = W2.SALARY;
+
+
+/*question 10*/
+SELECT DEPARTMENT 
+FROM Worker 
+GROUP BY DEPARTMENT 
+HAVING COUNT(*) < 3;
